@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,10 +10,12 @@
         <module name="model" />
         <module name="common-util" />
         <module name="service-util" />
+        <module name="service-hospital" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="common_util" target="1.8" />
+      <module name="service_hospital" target="1.8" />
       <module name="service_util" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -23,7 +26,9 @@
       <module name="common_util" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service" options="" />
+      <module name="service-hospital" options="-parameters" />
       <module name="service-util" options="-parameters" />
+      <module name="service_hospital" options="-parameters" />
       <module name="service_util" options="-parameters" />
     </option>
   </component>
