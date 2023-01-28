@@ -7,10 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="model" />
         <module name="common-util" />
-        <module name="service-util" />
+        <module name="model" />
         <module name="service-hospital" />
+        <module name="service-util" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

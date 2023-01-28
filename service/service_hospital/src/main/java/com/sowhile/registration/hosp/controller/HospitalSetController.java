@@ -20,9 +20,9 @@ public class HospitalSetController {
         return list;
     }
 
-    //2.逻辑删除
+    //2.逻辑删除医院
     @DeleteMapping("{id}")
-    public boolean removeHospitalSet(@PathVariable("id") Long id) {
+    public boolean removeHospitalSet(@PathVariable Long id) {
         boolean flag = hospitalSetService.removeById(id);
         return flag;
     }
