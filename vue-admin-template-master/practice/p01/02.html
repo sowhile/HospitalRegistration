@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue</title>
+</head>
+<body>
+<div id="app">
+  {{ msg }}
+  <hr/>
+  {{ age }}
+  <hr/>
+  <input :value="msg" type="text"/>
+  <input v-model="msg" type="text"/>
+  <button v-on:click="show(3)">按钮</button>
+  <hr/>
+  <table>
+    <th>name</th>
+    <th>age</th>
+    <tr v-for="user in userlist">
+      <td>{{ user.name }}</td>
+      <td>{{ user.age }}</td>
+    </tr>
+  </table>
+</div>
+<script src="vue.min.js"></script>
+<script src="axios.min.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      msg: "hello, Vue!",
+      age: 1,
+      userlist: [{name: "q1", age: 21}, {name: "q2", age: 22}, {name: "q3", age: 23}],
+      userlist2: [],
+    },
+    created() {
+      this.getlist();
+      console.log("created!")
+    },
+    destroy() {
+      console.log("destroy!")
+    },
+    methods: {
+      show(a) {
+        alert(`哈哈哈=${a}`);
+      },
+      getlist() {
+        axios.get("user.json")
+          .then(response => {
+            this.userlist = response.data.data.items
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    }
+  })
+</script>
+</body>
+</html>

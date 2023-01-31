@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+/* Layout */
+import Layout from '../views/layout/Layout'
 
 // in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
 // detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
 
 Vue.use(Router)
-
-/* Layout */
-import Layout from '../views/layout/Layout'
 
 /**
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -42,20 +41,20 @@ export const constantRouterMap = [
     path: '/hospSet',
     component: Layout,
     redirect: '/hospSet/list',
-    name: '医院设置管理',
-    meta: {title: '医院设置管理', icon: 'chart'},
+    name: '医院管理',
+    meta: {title: '医院管理', icon: 'chart'},
     children: [
       {
         path: 'list',
-        name: '医院设置列表',
+        name: '医院列表',
         component: () => import('@/views/hospset/list'),
-        meta: {title: '医院设置列表', icon: 'list'}
+        meta: {title: '医院列表', icon: 'list'}
       },
       {
         path: 'add',
-        name: '医院设置添加',
+        name: '添加医院',
         component: () => import('@/views/hospset/add'),
-        meta: {title: '医院设置添加', icon: 'edit'}
+        meta: {title: '添加医院', icon: 'edit'}
       }
     ]
   },
