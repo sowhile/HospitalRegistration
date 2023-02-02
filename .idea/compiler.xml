@@ -11,6 +11,7 @@
         <module name="model" />
         <module name="service-hospital" />
         <module name="service-util" />
+        <module name="service_cmn" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +29,7 @@
       <module name="service" options="" />
       <module name="service-hospital" options="-parameters" />
       <module name="service-util" options="-parameters" />
+      <module name="service_cmn" options="-parameters" />
       <module name="service_hospital" options="-parameters" />
       <module name="service_util" options="-parameters" />
     </option>

@@ -84,7 +84,7 @@ public class HospitalSetController {
 
     //6.修改医院设置
     @ApiOperation(value = "修改医院")
-    @PostMapping("updateHospitalSet/{id}")
+    @PostMapping("updateHospitalSet")
     public Result updateHospitalSet(@RequestBody(required = true) HospitalSet hospitalSet) {
         boolean updateByIdFlag = hospitalSetService.updateById(hospitalSet);
         if (updateByIdFlag) return Result.ok();

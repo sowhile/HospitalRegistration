@@ -64,6 +64,7 @@ public class Dict {
     private String dictCode;
 
     @ApiModelProperty(value = "是否包含子节点")
+    //数据库中没有这个字段
     @TableField(exist = false)
     private boolean hasChildren;
 

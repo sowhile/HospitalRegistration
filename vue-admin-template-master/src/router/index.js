@@ -55,10 +55,33 @@ export const constantRouterMap = [
         name: '添加医院',
         component: () => import('@/views/hospset/add'),
         meta: {title: '添加医院', icon: 'edit'}
+      },
+      {
+        path: 'edit/:id',
+        name: '编辑',
+        component: () => import('@/views/hospset/add'),
+        meta: {title: '编辑', noCache: true},
+        hidden: true
       }
     ]
   },
 
+  {
+    path: '/cmn',
+    component: Layout,
+    redirect: '/cmn/list',
+    name: '数据管理',
+    meta: {title: '数据管理', icon: 'example'},
+    alwaysShow: true,
+    children: [
+      {
+        path: 'list',
+        name: '数据字典',
+        component: () => import('@/views/dict/list'),
+        meta: {title: '数据字典', icon: 'table'}
+      },
+    ]
+  },
   {
     path: '/example',
     component: Layout,

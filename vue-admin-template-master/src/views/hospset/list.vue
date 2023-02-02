@@ -28,10 +28,21 @@
           {{ scope.row.status === 1 ? '可用' : '不可用' }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280" align="center">
+      <el-table-column align="center" label="操作" width="220">
         <template slot-scope="scope">
+          <el-button v-if="scope.row.status===1" icon="el-icon-remove-outline" size="mini"
+                     type="primary" @click="lockHostSet(scope.row.id,0)">锁定
+          </el-button>
+          <el-button v-if="scope.row.status===0" icon="el-icon-circle-plus-outline" size="mini"
+                     type="warning" @click="lockHostSet(scope.row.id,1)">解锁
+          </el-button>
+          <router-link :to="'/hospSet/edit/'+scope.row.id">
+            <el-button icon="el-icon-edit" size="mini" type="success"></el-button>
+          </router-link>
           <el-button type="danger" size="mini"
-                     icon="el-icon-delete" @click="removeDataById(scope.row.id)"></el-button>
+                     icon="el-icon-delete" @click="removeDataById(scope.row.id)">
+          </el-button>
+
         </template>
       </el-table-column>
 
@@ -49,48 +60,89 @@
 </template>
 
 <script>
-  import hospSet from '@/api/hospset'
+import hospSet from '@/api/hospset'
 
-  export default {
-    //定义变量和初始值
-    data() {
-      return {
-        current: 1, //当前页
-        limit: 6, //每页显示记录数
-        searchObj: {},  //条件封装对象
-        list: [], //每页数据集合
-        total: 0, //总记录数
-        multipleSelection: [], //批量选中的记录列表
-      }
+export default {
+  //定义变量和初始值
+  data() {
+    return {
+      current: 1, //当前页
+      limit: 6, //每页显示记录数
+      searchObj: {},  //条件封装对象
+      list: [], //每页数据集合
+      total: 0, //总记录数
+      multipleSelection: [], //批量选中的记录列表
+    }
+  },
+  //在页面渲染之前执行
+  created() {
+    this.getList();
+  },
+  //定义方法，进行请求接口的调用
+  methods: {
+    //默认为第1页
+    getList(page = 1) {
+      this.current = page;
+      hospSet.getHospSetList(this.current, this.limit, this.searchObj)
+        .then(response => {
+          this.list = response.data.records;
+          this.total = response.data.total;
+        })
+        .catch(err => {
+        })
     },
-    //在页面渲染之前执行
-    created() {
-      this.getList();
-    },
-    //定义方法，进行请求接口的调用
-    methods: {
-      //默认为第1页
-      getList(page = 1) {
-        this.current = page;
-        hospSet.getHospSetList(this.current, this.limit, this.searchObj)
+    //删除医院
+    removeDataById(id) {
+      this.$confirm('此操作将永久删除医院信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => { //确定执行then方法
+        //调用接口
+        hospSet.deleteHospSet(id)
           .then(response => {
-            this.list = response.data.records;
-            this.total = response.data.total;
-            console.log(response);
+            //提示
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            //刷新页面
+            this.getList(1)
           })
-          .catch(err => {
-            console.log(err);
-          })
-      },
-      //删除医院
-      removeDataById(id) {
+      })
+    },
+    //用于获取复选框的值
+    handleSelectionChange(selection) {
+      this.multipleSelection = selection;
+    },
+    //批量删除
+    removeRows() {
+      console.log(this.multipleSelection);
+      if (this.multipleSelection.length === 0) {
+        this.$alert('请至少选择一个医院！', '批量删除', {
+          confirmButtonText: '好',
+          // callback: action => {
+          //   this.$message({
+          //     type: 'info',
+          //     message: `删除`
+          //   });
+          // }
+        })
+      } else {
         this.$confirm('此操作将永久删除医院信息, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => { //确定执行then方法
+          let idList = [];
+          //遍历得到id值
+          for (let i = 0; i < this.multipleSelection.length; i++) {
+            let obj = this.multipleSelection[i];
+            let id = obj.id;
+            idList.push(id);
+          }
           //调用接口
-          hospSet.deleteHospSet(id)
+          hospSet.batchHospSet(idList)
             .then(response => {
               //提示
               this.$message({
@@ -101,51 +153,16 @@
               this.getList(1)
             })
         })
-      },
-      //用于获取复选框的值
-      handleSelectionChange(selection) {
-        this.multipleSelection = selection;
-      },
-      //批量删除
-      removeRows() {
-        console.log(this.multipleSelection);
-        if (this.multipleSelection.length === 0) {
-          this.$alert('请至少选择一个医院！', '批量删除', {
-            confirmButtonText: '好',
-            // callback: action => {
-            //   this.$message({
-            //     type: 'info',
-            //     message: `删除`
-            //   });
-            // }
-          })
-        } else {
-          this.$confirm('此操作将永久删除医院信息, 是否继续?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => { //确定执行then方法
-            let idList = [];
-            //遍历得到id值
-            for (let i = 0; i < this.multipleSelection.length; i++) {
-              let obj = this.multipleSelection[i];
-              let id = obj.id;
-              idList.push(id);
-            }
-            //调用接口
-            hospSet.batchHospSet(idList)
-              .then(response => {
-                //提示
-                this.$message({
-                  type: 'success',
-                  message: '删除成功!'
-                })
-                //刷新页面
-                this.getList(1)
-              })
-          })
-        }
       }
-    }
+    },
+    //锁定和取消锁定
+    lockHostSet(id, status) {
+      hospSet.lockHospSet(id, status)
+        .then(response => {
+          //刷新
+          this.getList(this.current);
+        })
+    },
   }
+}
 </script>
