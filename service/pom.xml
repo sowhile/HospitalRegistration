@@ -12,8 +12,8 @@
     <artifactId>service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>service_hospital</module>
-        <module>service_cmn</module>
+        <module>service-hospital</module>
+        <module>service-cmn</module>
     </modules>
     <version>1.0</version>
     <dependencies>
