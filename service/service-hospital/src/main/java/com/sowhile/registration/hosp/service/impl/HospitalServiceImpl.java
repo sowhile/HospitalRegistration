@@ -33,7 +33,6 @@ public class HospitalServiceImpl implements HospitalService {
             hospital.setCreateTime(hospitalExist.getCreateTime());
             hospital.setUpdateTime(new Date());
             hospital.setIsDeleted(0);
-            hospitalRepository.save(hospital);
         }
         //不存在 添加
         else {
@@ -41,8 +40,8 @@ public class HospitalServiceImpl implements HospitalService {
             hospital.setCreateTime(new Date());
             hospital.setUpdateTime(new Date());
             hospital.setIsDeleted(0);
-            hospitalRepository.save(hospital);
         }
+        hospitalRepository.save(hospital);
     }
 
     @Override

@@ -5,11 +5,16 @@ import com.sowhile.registration.common.helper.HttpRequestHelper;
 import com.sowhile.registration.common.result.Result;
 import com.sowhile.registration.common.result.ResultCodeEnum;
 import com.sowhile.registration.common.util.MD5;
+import com.sowhile.registration.hosp.service.DepartmetService;
 import com.sowhile.registration.hosp.service.HospitalService;
 import com.sowhile.registration.hosp.service.HospitalSetService;
+import com.sowhile.registration.model.hosp.Department;
+import com.sowhile.registration.vo.hosp.DepartmentQueryVo;
+import com.sowhile.registration.vo.hosp.DepartmentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +34,85 @@ public class ApiController {
     @Autowired
     private HospitalSetService hospitalSetService;
 
+    @Autowired
+    private DepartmetService departmetService;
+
+    @ApiOperation("上传科室接口")
+    @PostMapping("saveDepartment")
+    public Result saveDepartment(HttpServletRequest request) {
+        //获取传递过来的科室信息
+        Map<String, String[]> requestMap = request.getParameterMap();
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(requestMap);
+        //1.获取传递过来的签名(MD5加密)
+        String sign = (String) paramMap.get("sign");
+        //2.查询数据库
+        String hoscode = (String) paramMap.get("hoscode");
+        String signKey = hospitalSetService.getSignKey(hoscode);
+        //3.把查出来的签名进行MD5加密
+        String encrypt = MD5.encrypt(signKey);
+
+        if (StringUtils.isEmpty(hoscode)) {
+            throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
+        }
+        if (!sign.equals(encrypt)) {
+            throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        //调用service的方法
+        departmetService.save(paramMap);
+        return Result.ok();
+    }
+
+    @ApiOperation("查询科室接口")
+    @PostMapping("department/list")
+    public Result findDepartment(HttpServletRequest request) {
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
+        //必须参数校验
+        String hoscode = (String) paramMap.get("hoscode");
+        if (StringUtils.isEmpty(hoscode)) {
+            throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
+        }
+        if (!paramMap.get("sign").equals(MD5.encrypt(hospitalSetService.getSignKey(hoscode)))) {
+            throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        int page = StringUtils.isEmpty(paramMap.get("page")) ? 1 : Integer.parseInt((String) paramMap.get("page"));
+        int limit = StringUtils.isEmpty(paramMap.get("limit")) ? 10 : Integer.parseInt((String) paramMap.get("limit"));
+
+        DepartmentQueryVo departmentQueryVo = new DepartmentQueryVo();
+        departmentQueryVo.setHoscode(hoscode);
+        //调用service方法
+        Page<Department> pageModel = departmetService.findPageDepartment(page, limit, departmentQueryVo);
+        return Result.ok(pageModel);
+    }
+
+    @ApiOperation("删除科室接口")
+    @PostMapping("department/remove")
+    public Result removeDepartment(HttpServletRequest request) {
+        //获取传递过来的医院信息
+        Map<String, String[]> requestMap = request.getParameterMap();
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(requestMap);
+        //1.获取传递过来的签名(MD5加密)
+        String sign = (String) paramMap.get("sign");
+        //2.查询数据库
+        String hoscode = (String) paramMap.get("hoscode");
+        String signKey = hospitalSetService.getSignKey(hoscode);
+        //3.把查出来的签名进行MD5加密
+        String encrypt = MD5.encrypt(signKey);
+
+        if (StringUtils.isEmpty(hoscode)) {
+            throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
+        }
+        if (!sign.equals(encrypt)) {
+            throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        String depcode = (String) paramMap.get("depcode");
+
+        departmetService.remove(hoscode, depcode);
+        return Result.ok();
+    }
+
     @ApiOperation("上传医院接口")
     @PostMapping("saveHospital")
     public Result saveHosp(HttpServletRequest request) {
@@ -42,6 +126,7 @@ public class ApiController {
         String signKey = hospitalSetService.getSignKey(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
+
         if (StringUtils.isEmpty(hoscode)) {
             throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
         }
@@ -77,5 +162,4 @@ public class ApiController {
 
         return Result.ok(hospitalService.getByHoscode((String) paramMap.get("hoscode")));
     }
-
 }
