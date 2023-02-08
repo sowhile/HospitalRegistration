@@ -31,3 +31,4 @@ hs_err_pid*
 /model/target/
 /service/service-cmn/target/
 /service/service-hospital/target/
+/.idea/
