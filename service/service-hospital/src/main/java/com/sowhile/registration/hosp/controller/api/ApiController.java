@@ -34,11 +34,11 @@ public class ApiController {
     public Result saveHosp(HttpServletRequest request) {
         //获取传递过来的医院信息
         Map<String, String[]> requestMap = request.getParameterMap();
-        Map<String, Object> switchMap = HttpRequestHelper.switchMap(requestMap);
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(requestMap);
         //1.获取传递过来的签名(MD5加密)
-        String sign = (String) switchMap.get("sign");
+        String sign = (String) paramMap.get("sign");
         //2.查询数据库
-        String hoscode = (String) switchMap.get("hoscode");
+        String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
@@ -50,11 +50,11 @@ public class ApiController {
         }
 
         //传输过程中'+'转换为了' ',所以要转换回来
-        String logoData = (String) switchMap.get("logoData");
+        String logoData = (String) paramMap.get("logoData");
         String replaceAll = logoData.replaceAll(" ", "+");
-        switchMap.put("logoData", replaceAll);
+        paramMap.put("logoData", replaceAll);
         //调用service方法
-        hospitalService.save(switchMap);
+        hospitalService.save(paramMap);
         return Result.ok();
     }
 
