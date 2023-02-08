@@ -19,11 +19,15 @@
 *.tar.gz
 *.rar
 
+#IDEA config
+*.iml
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/service/service-hospital/target/
+
 /common/common-util/target/
 /common/service-util/target/
+/hospital-manage/target/
 /model/target/
 /service/service-cmn/target/
-/hospital-manage/target/
+/service/service-hospital/target/
