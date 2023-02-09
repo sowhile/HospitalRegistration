@@ -46,13 +46,13 @@ export const constantRouterMap = [
     children: [
       {
         path: 'list',
-        name: '医院列表',
+        name: '医院设置列表',
         component: () => import('@/views/hospset/list'),
-        meta: {title: '医院列表', icon: 'list'}
+        meta: {title: '医院设置列表', icon: 'list'}
       },
       {
         path: 'add',
-        name: '添加医院',
+        name: '添加医院设置',
         component: () => import('@/views/hospset/add'),
         meta: {title: '添加医院', icon: 'edit'}
       },
@@ -62,7 +62,13 @@ export const constantRouterMap = [
         component: () => import('@/views/hospset/add'),
         meta: {title: '编辑', noCache: true},
         hidden: true
-      }
+      },
+      {
+        path: 'hosp/list',
+        name: '医院列表',
+        component: () => import('@/views/hosp/list'),
+        meta: {title: '医院列表', icon: 'list'}
+      },
     ]
   },
 

@@ -4,7 +4,7 @@ export default {
   //查询医院列表
   getHospSetList(current, limit, searchObj) {
     return request({
-      url: `/hosp/hospitalSet/findPageHospSet/${current}/${limit}`,
+      url: `/admin/hosp/hospitalSet/findPageHospSet/${current}/${limit}`,
       method: 'post',
       data: searchObj //使用json传递
     })
@@ -12,14 +12,14 @@ export default {
   //删除医院
   deleteHospSet(id) {
     return request({
-      url: `/hosp/hospitalSet/${id}`,
+      url: `/admin/hosp/hospitalSet/${id}`,
       method: 'delete'
     })
   },
   //批量删除
   batchHospSet(idList) {
     return request({
-      url: `/hosp/hospitalSet/batchRemove`,
+      url: `/admin/hosp/hospitalSet/batchRemove`,
       method: 'delete',
       data: idList
     })
@@ -27,14 +27,14 @@ export default {
   //锁定和取消锁定
   lockHospSet(id, status) {
     return request({
-      url: `/hosp/hospitalSet/lockHospitalSet/${id}/${status}`,
+      url: `/admin/hosp/hospitalSet/lockHospitalSet/${id}/${status}`,
       method: 'put'
     })
   },
   //添加医院
   saveHosp(hospitalSet) {
     return request({
-      url: `/hosp/hospitalSet/saveHospitalSet`,
+      url: `/admin/hosp/hospitalSet/saveHospitalSet`,
       method: 'post',
       data: hospitalSet
     })
@@ -42,14 +42,14 @@ export default {
   //通过id查询医院
   getHospSet(id) {
     return request({
-      url: `/hosp/hospitalSet/getHospSet/${id}`,
+      url: `/admin/hosp/hospitalSet/getHospSet/${id}`,
       method: 'get',
     })
   },
   //修改医院
   updateHospSet(hospitalSet) {
     return request({
-      url: `/hosp/hospitalSet/updateHospitalSet`,
+      url: `/admin/hosp/hospitalSet/updateHospitalSet`,
       method: 'post',
       data: hospitalSet
     })

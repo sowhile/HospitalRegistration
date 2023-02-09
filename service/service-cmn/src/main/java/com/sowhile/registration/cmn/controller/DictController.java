@@ -5,6 +5,7 @@ import com.sowhile.registration.common.result.Result;
 import com.sowhile.registration.model.cmn.Dict;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,15 @@ import java.util.List;
 public class DictController {
     @Autowired
     private DictService dictService;
+
+    @ApiOperation(value = "根据dictCode获取下级节点")
+    @GetMapping(value = "/findByDictCode/{dictCode}")
+    public Result<List<Dict>> findByDictCode(
+            @ApiParam(name = "dictCode", value = "节点编码", required = true)
+            @PathVariable String dictCode) {
+        List<Dict> list = dictService.findByDictCode(dictCode);
+        return Result.ok(list);
+    }
 
     @ApiOperation("根据数据id查询子数据列表")
     @GetMapping("findChildData/{id}")
