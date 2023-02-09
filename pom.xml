@@ -16,6 +16,7 @@
         <module>model</module>
         <module>service</module>
         <module>hospital-manage</module>
+        <module>service-client</module>
     </modules>
     <version>0.0.1-SNAPSHOT</version>
     <name>HospitalRegistration</name>

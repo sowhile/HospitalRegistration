@@ -63,6 +63,4 @@ public class Swagger2Config {
                 .contact(new Contact("wangda", "https://github.com/sowhile/HospitalRegistration", "wdworkbox@aliyun.com"))
                 .build();
     }
-
-
 }
