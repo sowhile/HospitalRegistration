@@ -47,6 +47,18 @@
       <el-table-column label="创建时间" prop="createTime"/>
 
       <el-table-column align="center" label="操作" width="230">
+        <template slot-scope="scope">
+          <el-button v-if="scope.row.status === 1" size="mini" type="danger" @click="updateStatus(scope.row.id, 0)">
+            下线
+          </el-button>
+          <el-button v-if="scope.row.status === 0" size="mini" type="primary" @click="updateStatus(scope.row.id, 1)">
+            上线
+          </el-button>
+          <router-link :to="'/hospSet/hospital/show/'+scope.row.id">
+            <el-button size="mini" type="primary">查看</el-button>
+          </router-link>
+        </template>
+
       </el-table-column>
     </el-table>
 
@@ -142,6 +154,14 @@ export default {
           this.districtList = response.data
         })
     },
+    //
+    updateStatus(id, status) {
+      hospitalApi.updateStatus(id, status)
+        .then(response => {
+          this.fetchData(this.page)
+        })
+    },
+
   }
 }
 </script>

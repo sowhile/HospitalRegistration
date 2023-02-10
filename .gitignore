@@ -25,10 +25,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+/.idea/
 /common/common-util/target/
 /common/service-util/target/
 /hospital-manage/target/
 /model/target/
 /service/service-cmn/target/
 /service/service-hospital/target/
-/.idea/
+/service-gateway/target/
