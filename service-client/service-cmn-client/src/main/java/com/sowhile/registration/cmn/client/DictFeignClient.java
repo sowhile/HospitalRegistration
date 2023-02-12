@@ -12,7 +12,8 @@ public interface DictFeignClient {
      * 获取数据字典名称
      */
     @GetMapping(value = "/admin/cmn/dict/getName/{dictCode}/{value}")
-    String getName(@PathVariable("dictCode") String dictCode, @PathVariable("value") String value);
+    String getName(@PathVariable("dictCode") String dictCode,
+                   @PathVariable("value") String value);
 
     /**
      * 获取数据字典名称
