@@ -57,6 +57,9 @@
           <router-link :to="'/hospSet/hospital/show/'+scope.row.id">
             <el-button size="mini" type="primary">查看</el-button>
           </router-link>
+          <router-link :to="'/hospSet/hospital/schedule/'+scope.row.hoscode">
+            <el-button size="mini" type="primary">排班</el-button>
+          </router-link>
         </template>
 
       </el-table-column>

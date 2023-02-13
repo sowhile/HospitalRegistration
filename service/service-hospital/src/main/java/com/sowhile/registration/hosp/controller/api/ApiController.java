@@ -5,10 +5,10 @@ import com.sowhile.registration.common.helper.HttpRequestHelper;
 import com.sowhile.registration.common.result.Result;
 import com.sowhile.registration.common.result.ResultCodeEnum;
 import com.sowhile.registration.common.util.MD5;
-import com.sowhile.registration.hosp.service.DepartmetService;
 import com.sowhile.registration.hosp.service.HospitalService;
 import com.sowhile.registration.hosp.service.HospitalSetService;
 import com.sowhile.registration.hosp.service.ScheduleService;
+import com.sowhile.registration.hosp.service.departmentService;
 import com.sowhile.registration.model.hosp.Department;
 import com.sowhile.registration.model.hosp.Schedule;
 import com.sowhile.registration.vo.hosp.DepartmentQueryVo;
@@ -37,7 +37,7 @@ public class ApiController {
     private HospitalSetService hospitalSetService;
 
     @Autowired
-    private DepartmetService departmetService;
+    private departmentService departmentService;
 
     @Autowired
     private ScheduleService scheduleService;
@@ -64,7 +64,7 @@ public class ApiController {
         }
 
         //调用service的方法
-        departmetService.save(paramMap);
+        departmentService.save(paramMap);
         return Result.ok();
     }
 
@@ -87,7 +87,7 @@ public class ApiController {
         DepartmentQueryVo departmentQueryVo = new DepartmentQueryVo();
         departmentQueryVo.setHoscode(hoscode);
         //调用service方法
-        Page<Department> pageModel = departmetService.findPageDepartment(page, limit, departmentQueryVo);
+        Page<Department> pageModel = departmentService.findPageDepartment(page, limit, departmentQueryVo);
         return Result.ok(pageModel);
     }
 
@@ -114,7 +114,7 @@ public class ApiController {
 
         String depcode = (String) paramMap.get("depcode");
 
-        departmetService.remove(hoscode, depcode);
+        departmentService.remove(hoscode, depcode);
         return Result.ok();
     }
 
