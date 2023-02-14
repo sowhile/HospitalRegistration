@@ -4,6 +4,7 @@ import com.sowhile.registration.model.hosp.Hospital;
 import com.sowhile.registration.vo.hosp.HospitalQueryVo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 public interface HospitalService {
@@ -18,4 +19,6 @@ public interface HospitalService {
     Map<String, Object> show(String id);
 
     String getHospName(String hoscode);
+
+    List<Hospital> findByHosame(String hosname);
 }
