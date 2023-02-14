@@ -19,7 +19,7 @@ export default {
       method: 'get',
     })
   },
-  //根据id省查询所有的市
+  //根据id查询所有的子节点
   findChildId(id) {
     return request({
       url: `${dict_api_name}/findChildData/${id}`,
@@ -60,6 +60,5 @@ export default {
       method: 'get'
     })
   }
-
 }
 

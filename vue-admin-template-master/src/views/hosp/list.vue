@@ -149,12 +149,15 @@ export default {
           this.cityList = response.data
         })
     },
+    //点击选择城市后
     cityChanged() {
       this.districtList = []
       this.searchObj.districtCode = null
       hospitalApi.findChildId(this.searchObj.districtCode)
         .then(response => {
           this.districtList = response.data
+        })
+        .catch(err => {
         })
     },
     //
