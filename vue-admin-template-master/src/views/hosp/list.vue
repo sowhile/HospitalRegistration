@@ -1,14 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :inline="true" class="demo-form-inline">
+
       <el-form-item>
-        <el-select v-model="searchObj.provinceCode" placeholder="请选择省" @change="provinceChanged">
+        <el-select v-model="searchObj.provinceCode" placeholder="请选择省" @change="provinceChanged()">
           <el-option v-for="item in provinceList" :key="item.id" :label="item.name" :value="item.id"/>
         </el-select>
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="searchObj.cityCode" placeholder="请选择市" @change="cityChanged">
+        <el-select v-model="searchObj.cityCode" placeholder="请选择市" @change="cityChanged()">
           <el-option v-for="item in cityList" :key="item.id" :label="item.name" :value="item.id"/>
         </el-select>
       </el-form-item>
@@ -100,16 +101,12 @@ export default {
   created() {
     //调用医院列表
     this.fetchData(this.page)
-    this.findAllProvince(this.page)
-
-    hospitalApi.findByDictCode('Province').then(response => {
-      this.provinceList = response.data
-    })
+    this.findAllProvince()
   },
   methods: {
     // 加载医院列表数据
     fetchData(page = 1) {
-      // 异步获取远程数据（ajax）
+      // 异步获取远程数据(ajax)
       this.page = page
       hospitalApi.getHospList(this.page, this.limit, this.searchObj)
         .then(response => {
@@ -134,14 +131,15 @@ export default {
     },
     // 重置查询表单
     resetData() {
-      console.log('重置查询表单')
       this.searchObj = {}
       this.fetchData()
     },
+
     //点击省，显示对应的市 联动
     provinceChanged() {
-      this.cityList = []
       this.searchObj.cityCode = null
+      this.cityList = []
+
       this.districtList = []
       this.searchObj.districtCode = null
       hospitalApi.findChildId(this.searchObj.provinceCode)
@@ -151,23 +149,24 @@ export default {
     },
     //点击选择城市后
     cityChanged() {
+      this.$forceUpdate()
       this.districtList = []
       this.searchObj.districtCode = null
-      hospitalApi.findChildId(this.searchObj.districtCode)
+      hospitalApi.findChildId(this.searchObj.cityCode)
         .then(response => {
           this.districtList = response.data
         })
-        .catch(err => {
-        })
     },
     //
+    districtChanged() {
+    },
+    //更新上线下线状态
     updateStatus(id, status) {
       hospitalApi.updateStatus(id, status)
         .then(response => {
           this.fetchData(this.page)
         })
     },
-
   }
 }
 </script>
