@@ -9,6 +9,8 @@ import com.sowhile.registration.model.user.UserInfo;
 import com.sowhile.registration.user.mapper.UserInfoMapper;
 import com.sowhile.registration.user.service.UserInfoService;
 import com.sowhile.registration.vo.user.LoginVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +19,10 @@ import java.util.Map;
 
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     @Override
     public Map<String, Object> loginUser(LoginVo loginVo) {
         //从loginVo获取输入的手机号和验证码
@@ -26,8 +32,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(code))
             throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
         //判断手机验证码和输入的验证码是否一致
-        //TODO
-
+        String mobileCode = redisTemplate.opsForValue().get(phone);
+        if (!code.equals(mobileCode)) {
+            throw new RegistrationException(ResultCodeEnum.CODE_ERROR);
+        }
         //判断是否为第一次登录
         QueryWrapper<UserInfo> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.eq("phone", phone);

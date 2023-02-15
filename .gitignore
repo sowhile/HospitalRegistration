@@ -33,4 +33,5 @@ hs_err_pid*
 /service/service-cmn/target/
 /service/service-hospital/target/
 /service/service-user/target/
+/service/service-msm/target/
 /service-gateway/target/
