@@ -14,6 +14,7 @@
     <modules>
         <module>service-hospital</module>
         <module>service-cmn</module>
+        <module>service-user</module>
     </modules>
     <version>1.0</version>
 
