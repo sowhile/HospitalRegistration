@@ -13,8 +13,23 @@ export default {
   //根据医院名称进行查询
   getByHosname(hosname) {
     return request({
-      url: `${api_name}/findByHosname/${hosname}`,
+      url: `${api_name}/findByHosName/${hosname}`,
+      method: 'get'
+    })
+  },
+  //医院预约挂号详情
+  show(hoscode) {
+    return request({
+      url: `${api_name}/${hoscode}`,
+      method: 'get'
+    })
+  },
+  //根据医院编号获取科室列表
+  findDepartment(hoscode) {
+    return request({
+      url: `${api_name}/department/${hoscode}`,
       method: 'get'
     })
   }
+
 }

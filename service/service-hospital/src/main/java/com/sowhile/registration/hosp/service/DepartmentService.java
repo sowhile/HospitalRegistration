@@ -12,7 +12,7 @@ import java.util.Map;
  * @author sowhile
  * <p>
  */
-public interface departmentService {
+public interface DepartmentService {
     void save(Map<String, Object> paramMap);
 
     Page<Department> findPageDepartment(int page, int limit, DepartmentQueryVo departmentQueryVo);

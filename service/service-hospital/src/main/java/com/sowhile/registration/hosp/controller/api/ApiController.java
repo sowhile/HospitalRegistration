@@ -5,10 +5,10 @@ import com.sowhile.registration.common.helper.HttpRequestHelper;
 import com.sowhile.registration.common.result.Result;
 import com.sowhile.registration.common.result.ResultCodeEnum;
 import com.sowhile.registration.common.util.MD5;
+import com.sowhile.registration.hosp.service.DepartmentService;
 import com.sowhile.registration.hosp.service.HospitalService;
 import com.sowhile.registration.hosp.service.HospitalSetService;
 import com.sowhile.registration.hosp.service.ScheduleService;
-import com.sowhile.registration.hosp.service.departmentService;
 import com.sowhile.registration.model.hosp.Department;
 import com.sowhile.registration.model.hosp.Schedule;
 import com.sowhile.registration.vo.hosp.DepartmentQueryVo;
@@ -37,7 +37,7 @@ public class ApiController {
     private HospitalSetService hospitalSetService;
 
     @Autowired
-    private departmentService departmentService;
+    private DepartmentService departmentService;
 
     @Autowired
     private ScheduleService scheduleService;

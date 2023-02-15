@@ -1,6 +1,8 @@
 <template>
   <div class="home page-component">
-    <el-carousel indicator-position="outside">
+    <!--    <el-carousel indicator-position="outside">-->
+    <!--    解决轮播图上下抖动-->
+    <el-carousel>
       <el-carousel-item v-for="item in 2" :key="item">
         <img alt="" src="~assets/images/web-banner1.png">
       </el-carousel-item>
@@ -175,6 +177,7 @@ export default {
       searchObj: {},
       page: 1,
       limit: 10,
+      state: '',
 
       hosname: '', //医院名称
       hostypeList: [], //医院等级集合
@@ -247,8 +250,13 @@ export default {
 
     //在输入框输入值，弹出下拉框，显示相关内容
     querySearchAsync(queryString, cb) {
-      this.searchObj = []
-      if (queryString == '') return
+      queryString = queryString.trim()
+      if (queryString === '') {
+        cb([]);
+        return
+      }
+      // this.searchObj = []
+      // if (queryString == '') return
       hospApi.getByHosname(queryString).then(response => {
         for (let i = 0, len = response.data.length; i < len; i++) {
           response.data[i].value = response.data[i].hosname
@@ -256,15 +264,13 @@ export default {
         cb(response.data)
       })
     },
-
     //在下拉框选择某一个内容，执行下面方法，跳转到详情页面中
     handleSelect(item) {
-      window.location.href = '/hospital/' + item.hoscode
+      window.location.href = '/hosp/' + item.hoscode
     },
-
     //点击某个医院名称，跳转到详情页面中
     show(hoscode) {
-      window.location.href = '/hospital/' + hoscode
+      window.location.href = '/hosp/' + hoscode
     }
   }
 }

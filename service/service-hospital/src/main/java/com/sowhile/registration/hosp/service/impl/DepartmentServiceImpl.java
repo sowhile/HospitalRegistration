@@ -2,7 +2,7 @@ package com.sowhile.registration.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sowhile.registration.hosp.repository.DepartmentRepository;
-import com.sowhile.registration.hosp.service.departmentService;
+import com.sowhile.registration.hosp.service.DepartmentService;
 import com.sowhile.registration.model.hosp.Department;
 import com.sowhile.registration.vo.hosp.DepartmentQueryVo;
 import com.sowhile.registration.vo.hosp.DepartmentVo;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * <p>
  */
 @Service
-public class DepartmentServiceImpl implements departmentService {
+public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 

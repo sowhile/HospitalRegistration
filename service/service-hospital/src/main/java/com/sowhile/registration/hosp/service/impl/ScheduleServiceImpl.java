@@ -2,9 +2,9 @@ package com.sowhile.registration.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sowhile.registration.hosp.repository.ScheduleRepository;
+import com.sowhile.registration.hosp.service.DepartmentService;
 import com.sowhile.registration.hosp.service.HospitalService;
 import com.sowhile.registration.hosp.service.ScheduleService;
-import com.sowhile.registration.hosp.service.departmentService;
 import com.sowhile.registration.model.hosp.Schedule;
 import com.sowhile.registration.vo.hosp.BookingScheduleRuleVo;
 import com.sowhile.registration.vo.hosp.ScheduleQueryVo;
@@ -36,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private HospitalService hospitalService;
 
     @Autowired
-    private departmentService departmentService;
+    private DepartmentService departmentService;
 
     @Override
     public void save(Map<String, Object> paramMap) {

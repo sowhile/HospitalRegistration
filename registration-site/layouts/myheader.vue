@@ -7,20 +7,20 @@
         <span class="text">尚医通 预约挂号统一平台</span>
       </div>
       <!-- 搜索框 -->
-      <div class="search-wrapper">
-        <div class="hospital-search animation-show">
-          <el-autocomplete
-            v-model="state"
-            :fetch-suggestions="querySearchAsync"
-            class="search-input small"
-            placeholder="点击输入医院名称"
-            prefix-icon="el-icon-search"
-            @select="handleSelect"
-          >
-            <span slot="suffix" class="search-btn v-link highlight clickable selected">搜索 </span>
-          </el-autocomplete>
-        </div>
-      </div>
+      <!--      <div class="search-wrapper">-->
+      <!--        <div class="hospital-search animation-show">-->
+      <!--          <el-autocomplete-->
+      <!--            v-model="state"-->
+      <!--            :fetch-suggestions="querySearchAsync"-->
+      <!--            class="search-input small"-->
+      <!--            placeholder="点击输入医院名称"-->
+      <!--            prefix-icon="el-icon-search"-->
+      <!--            @select="handleSelect"-->
+      <!--          >-->
+      <!--            <span slot="suffix" class="search-btn v-link highlight clickable selected">搜索 </span>-->
+      <!--          </el-autocomplete>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <!-- 右侧 -->
       <div class="right-wrapper">
         <span class="v-link clickable">帮助中心</span>

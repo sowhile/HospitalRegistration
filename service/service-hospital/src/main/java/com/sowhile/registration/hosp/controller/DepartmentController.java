@@ -1,7 +1,7 @@
 package com.sowhile.registration.hosp.controller;
 
 import com.sowhile.registration.common.result.Result;
-import com.sowhile.registration.hosp.service.departmentService;
+import com.sowhile.registration.hosp.service.DepartmentService;
 import com.sowhile.registration.vo.hosp.DepartmentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/admin/hosp/department")
 public class DepartmentController {
     @Autowired
-    private departmentService departmentService;
+    private DepartmentService departmentService;
 
     @ApiOperation(value = "查询医院所有科室列表")
     @GetMapping("getDeptList/{hoscode}")
