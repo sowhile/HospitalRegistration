@@ -57,7 +57,7 @@
                     <span v-if="dialogAtrr.second > 0" slot="suffix" class="sendText v-link">{{
                         dialogAtrr.second
                       }}s </span>
-                      <span v-if="dialogAtrr.second == 0" slot="suffix"
+                      <span v-if="dialogAtrr.second === 0" slot="suffix"
                             class="sendText v-link highlight clickable selected" @click="getCodeFun()">重新发送 </span>
                     </el-input>
                   </el-form-item>
@@ -117,11 +117,12 @@ import cookie from 'js-cookie'
 
 import userInfoApi from '@/api/userInfo'
 import smsApi from '@/api/msm'
+import Vue from 'vue'
 
 const defaultDialogAtrr = {
   showLoginType: 'phone', // 控制手机登录与微信登录切换
 
-  labelTips: '手机号码', // 输入框提示
+  labelTips: '手机号码登录', // 输入框标题
 
   inputValue: '', // 输入框绑定对象
   placeholder: '请输入您的手机号', // 输入框placeholder
@@ -153,13 +154,16 @@ export default {
   created() {
     this.showInfo()
   },
-  showInfo() {
-    let token = cookie.get('token')
-    if (token) {
-      this.name = cookie.get('name')
-    }
-  },
 
+  mounted() {
+    // 注册全局登录事件对象
+    window.loginEvent = new Vue();
+    // 监听登录事件
+    loginEvent.$on('loginDialogEvent', function () {
+      document.getElementById("loginDialog").click();
+    })
+    // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent')
+  },
   methods: {
     // 绑定登录或获取验证码按钮
     btnClick() {
@@ -217,8 +221,8 @@ export default {
 
     // 获取验证码
     getCodeFun() {
-      if (!(/^1[34578]\d{9}$/.test(this.userInfo.phone))) {
-        this.$message.error('手机号码不正确')
+      if (!(/^1[3456789]\d{9}$/.test(this.userInfo.phone))) {
+        this.$message.error('手机号码不正确！！！')
         return;
       }
 

@@ -62,7 +62,8 @@
               <div class="dept-list-wrapper el-scrollbar" style="height: 100%;">
                 <div class="dept-list el-scrollbar__wrap" style="margin-bottom: -17px; margin-right: -17px;">
                   <div class="el-scrollbar__view">
-                    <div v-for="(item,index) in departmentVoList" :key="item.id" :class="index == activeIndex ? 'selected' : ''"
+                    <div v-for="(item,index) in departmentVoList" :key="item.id"
+                         :class="index == activeIndex ? 'selected' : ''"
                          class="sub-item" @click="move(index,item.depcode)">
                       {{ item.depname }}
                     </div>
@@ -103,6 +104,7 @@ import '~/assets/css/hospital_personal.css'
 import '~/assets/css/hospital.css'
 
 import hospitalApi from '@/api/hosp'
+import cookie from 'js-cookie'
 
 export default {
   data() {
@@ -138,10 +140,18 @@ export default {
       this.activeIndex = index
       document.getElementById(depcode).scrollIntoView();
     },
-
+    // schedule(depcode) {
+    //   window.location.href = '/hospital/schedule?hoscode=' + this.hoscode + "&depcode=" + depcode
+    // }
     schedule(depcode) {
-      window.location.href = '/hospital/schedule?hoscode=' + this.hoscode + "&depcode=" + depcode
-    }
+      // 登录判断
+      let token = cookie.get('token')
+      if (!token) {
+        loginEvent.$emit('loginDialogEvent')
+        return
+      }
+      window.location.href = '/hospital/schedule?hoscode=' + this.hospital.hoscode + "&depcode=" + depcode
+    },
   }
 }
 </script>
