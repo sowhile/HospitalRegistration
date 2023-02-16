@@ -118,6 +118,7 @@ import cookie from 'js-cookie'
 import userInfoApi from '@/api/userInfo'
 import smsApi from '@/api/msm'
 import Vue from 'vue'
+import weixinApi from '@/api/weixin'
 
 const defaultDialogAtrr = {
   showLoginType: 'phone', // 控制手机登录与微信登录切换
@@ -163,8 +164,46 @@ export default {
       document.getElementById("loginDialog").click();
     })
     // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent')
+    //初始化微信js
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js'
+    document.body.appendChild(script)
+
+    // 微信登录回调处理
+    let self = this;
+    window["loginCallback"] = (name, token, openid) => {
+      self.loginCallback(name, token, openid);
+    }
   },
   methods: {
+    loginCallback(name, token, openid) {
+      // 打开手机登录层，绑定手机号，改逻辑与手机登录一致
+      if (openid != '') {
+        this.userInfo.openid = openid
+        this.showLogin()
+      } else {
+        this.setCookies(name, token)
+      }
+    },
+
+    weixinLogin() {
+      this.dialogAtrr.showLoginType = 'weixin'
+
+      weixinApi.getLoginParam().then(response => {
+        var obj = new WxLogin({
+          self_redirect: true,
+          id: 'weixinLogin', // 需要显示的容器id
+          appid: response.data.appid, // 公众号appid wx*******
+          scope: response.data.scope, // 网页默认即可
+          redirect_uri: response.data.redirectUri, // 授权成功后回调的url
+          state: response.data.state, // 可设置为简单的随机数加session用来校验
+          style: 'black', // 提供"black"、"white"可选。二维码的样式
+          href: '' // 外部css文件url，需要https
+        })
+      })
+    },
+
     // 绑定登录或获取验证码按钮
     btnClick() {
       // 判断是获取验证码还是登录
@@ -177,7 +216,8 @@ export default {
         // 登录
         this.login()
       }
-    },
+    }
+    ,
 
     // 绑定登录，点击显示登录层
     showLogin() {
@@ -185,7 +225,8 @@ export default {
 
       // 初始化登录层相关参数
       this.dialogAtrr = {...defaultDialogAtrr}
-    },
+    }
+    ,
 
     // 登录
     login() {
@@ -211,13 +252,15 @@ export default {
       }).catch(e => {
         this.dialogAtrr.loginBtn = '马上登录'
       })
-    },
+    }
+    ,
 
     setCookies(name, token) {
       cookie.set('token', token, {domain: 'localhost'})
       cookie.set('name', name, {domain: 'localhost'})
       window.location.reload()
-    },
+    }
+    ,
 
     // 获取验证码
     getCodeFun() {
@@ -245,7 +288,8 @@ export default {
         // 发送失败，回到重新获取验证码界面
         this.showLogin()
       })
-    },
+    }
+    ,
 
     // 倒计时
     timeDown() {
@@ -263,14 +307,16 @@ export default {
           this.dialogAtrr.second = 0;
         }
       }, 1000);
-    },
+    }
+    ,
 
     // 关闭登录层
     closeDialog() {
       if (this.clearSmsTime) {
         clearInterval(this.clearSmsTime);
       }
-    },
+    }
+    ,
 
     showInfo() {
       let token = cookie.get('token')
@@ -278,7 +324,8 @@ export default {
         this.name = cookie.get('name')
         console.log(this.name)
       }
-    },
+    }
+    ,
 
     loginMenu(command) {
       if ('/logout' == command) {
@@ -290,15 +337,13 @@ export default {
       } else {
         window.location.href = command
       }
-    },
+    }
+    ,
 
     handleSelect(item) {
       window.location.href = '/hospital/' + item.hoscode
-    },
-
-    weixinLogin() {
-      this.dialogAtrr.showLoginType = 'weixin'
-    },
+    }
+    ,
 
     phoneLogin() {
       this.dialogAtrr.showLoginType = 'phone'

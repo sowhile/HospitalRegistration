@@ -36,17 +36,30 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if (!code.equals(mobileCode)) {
             throw new RegistrationException(ResultCodeEnum.CODE_ERROR);
         }
-        //判断是否为第一次登录
-        QueryWrapper<UserInfo> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("phone", phone);
-        UserInfo userInfo = baseMapper.selectOne(userQueryWrapper);
+        //绑定手机号码
+        UserInfo userInfo = null;
+        if (!StringUtils.isEmpty(loginVo.getOpenid())) {
+            userInfo = this.getByOpenid(loginVo.getOpenid());
+            if (null != userInfo) {
+                userInfo.setPhone(loginVo.getPhone());
+                this.updateById(userInfo);
+            } else {
+                throw new RegistrationException(ResultCodeEnum.DATA_ERROR);
+            }
+        }
         if (userInfo == null) {
-            //第一次使用这个手机号
-            userInfo = new UserInfo();
-            userInfo.setName("");
-            userInfo.setPhone(phone);
-            userInfo.setStatus(1);
-            this.save(userInfo);
+            //判断是否为第一次登录
+            QueryWrapper<UserInfo> userQueryWrapper = new QueryWrapper<>();
+            userQueryWrapper.eq("phone", phone);
+            userInfo = baseMapper.selectOne(userQueryWrapper);
+            if (userInfo == null) {
+                //第一次使用这个手机号
+                userInfo = new UserInfo();
+                userInfo.setName("");
+                userInfo.setPhone(phone);
+                userInfo.setStatus(1);
+                this.save(userInfo);
+            }
         }
         //校验用户是否被禁用
         if (userInfo.getStatus() == 0) {
@@ -65,5 +78,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         String token = JwtHelper.createToken(userInfo.getId(), userInfo.getName());
         map.put("token", token);
         return map;
+    }
+
+    @Override
+    public UserInfo getByOpenid(String openId) {
+        QueryWrapper<UserInfo> userInfoQueryWrapper = new QueryWrapper<>();
+        userInfoQueryWrapper.eq("openid", openId);
+        UserInfo userInfo = baseMapper.selectOne(userInfoQueryWrapper);
+        return userInfo;
     }
 }
