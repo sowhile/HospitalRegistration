@@ -160,10 +160,9 @@ export default {
     // 注册全局登录事件对象
     window.loginEvent = new Vue();
     // 监听登录事件
-    loginEvent.$on('loginDialogEvent', function () {
+    window.loginEvent.$on('loginDialogEvent', function () {
       document.getElementById("loginDialog").click();
     })
-    // 触发事件，显示登录层：loginEvent.$emit('loginDialogEvent')
     //初始化微信js
     const script = document.createElement('script')
     script.type = 'text/javascript'
@@ -216,18 +215,14 @@ export default {
         // 登录
         this.login()
       }
-    }
-    ,
-
+    },
     // 绑定登录，点击显示登录层
     showLogin() {
       this.dialogUserFormVisible = true
 
       // 初始化登录层相关参数
       this.dialogAtrr = {...defaultDialogAtrr}
-    }
-    ,
-
+    },
     // 登录
     login() {
       this.userInfo.code = this.dialogAtrr.inputValue
@@ -252,16 +247,12 @@ export default {
       }).catch(e => {
         this.dialogAtrr.loginBtn = '马上登录'
       })
-    }
-    ,
-
+    },
     setCookies(name, token) {
       cookie.set('token', token, {domain: 'localhost'})
       cookie.set('name', name, {domain: 'localhost'})
       window.location.reload()
-    }
-    ,
-
+    },
     // 获取验证码
     getCodeFun() {
       if (!(/^1[3456789]\d{9}$/.test(this.userInfo.phone))) {
@@ -288,9 +279,7 @@ export default {
         // 发送失败，回到重新获取验证码界面
         this.showLogin()
       })
-    }
-    ,
-
+    },
     // 倒计时
     timeDown() {
       if (this.clearSmsTime) {
@@ -307,26 +296,20 @@ export default {
           this.dialogAtrr.second = 0;
         }
       }, 1000);
-    }
-    ,
-
+    },
     // 关闭登录层
     closeDialog() {
       if (this.clearSmsTime) {
         clearInterval(this.clearSmsTime);
       }
-    }
-    ,
-
+    },
     showInfo() {
       let token = cookie.get('token')
       if (token) {
         this.name = cookie.get('name')
         console.log(this.name)
       }
-    }
-    ,
-
+    },
     loginMenu(command) {
       if ('/logout' == command) {
         cookie.set('name', '', {domain: 'localhost'})
@@ -337,14 +320,10 @@ export default {
       } else {
         window.location.href = command
       }
-    }
-    ,
-
+    },
     handleSelect(item) {
       window.location.href = '/hospital/' + item.hoscode
-    }
-    ,
-
+    },
     phoneLogin() {
       this.dialogAtrr.showLoginType = 'phone'
       this.showLogin()

@@ -37,6 +37,11 @@ spring:
           predicates:
             - Path=/*/msm/**
 
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/*/oss/**
+
       discovery:
         locator:
           enabled: true
