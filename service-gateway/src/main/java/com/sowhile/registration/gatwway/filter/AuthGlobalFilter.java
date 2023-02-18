@@ -82,6 +82,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         if (null != tokenList) {
             token = tokenList.get(0);
         }
+        //TODO
         if (!StringUtils.isEmpty(token)) {
             return JwtHelper.getUserId(token);
         }
