@@ -39,9 +39,10 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             return out(response, ResultCodeEnum.PERMISSION);
         }
 
-        Long userId = this.getUserId(request);
+
         //api接口，异步请求，校验用户必须登录
         if (antPathMatcher.match("/api/**/auth/**", path)) {
+            Long userId = this.getUserId(request);
             if (StringUtils.isEmpty(userId)) {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response, ResultCodeEnum.LOGIN_AUTH);
@@ -82,7 +83,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         if (null != tokenList) {
             token = tokenList.get(0);
         }
-        //TODO
         if (!StringUtils.isEmpty(token)) {
             return JwtHelper.getUserId(token);
         }

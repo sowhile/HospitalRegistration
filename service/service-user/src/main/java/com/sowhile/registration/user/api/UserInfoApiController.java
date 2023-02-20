@@ -1,4 +1,4 @@
-package com.sowhile.registration.user.controller;
+package com.sowhile.registration.user.api;
 
 import com.sowhile.registration.common.result.Result;
 import com.sowhile.registration.common.util.AuthContextHolder;
