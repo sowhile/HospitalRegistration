@@ -127,4 +127,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         else
             return null;
     }
+
+    @Override
+    public Department getDepartment(String hoscode, String depcode) {
+        return departmentRepository.getDepartmentByHoscodeAndDepcode(hoscode, depcode);
+    }
 }
