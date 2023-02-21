@@ -37,3 +37,6 @@ hs_err_pid*
 /service/service-oss/target/
 /service/service-order/target/
 /service-gateway/target/
+/service-client/service-cmn-client/target/
+/service-client/service-user-client/target/
+/service-client/service-hosp-client/target/
