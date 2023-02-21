@@ -157,9 +157,8 @@ export default {
           return
         }
       })
-      window.location.href = '/hospital/schedule?hoscode=' + this.hospital.hoscode + "&depcode=" + depcode
+      window.location.href = '/hosp/schedule?hoscode=' + this.hospital.hoscode + "&depcode=" + depcode
     },
-
   }
 }
 </script>
