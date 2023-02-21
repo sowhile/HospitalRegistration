@@ -341,6 +341,24 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     }
 
     /**
+     * 修改排班
+     *
+     * @param schedule
+     */
+    @Override
+    public void update(Schedule schedule) {
+        schedule.setUpdateTime(new Date());
+        //主键一致就是更新
+        scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public Schedule getScheduleId(String scheduleId) {
+        Schedule schedule = baseMapper.selectById(scheduleId);
+        return schedule;
+    }
+
+    /**
      * 获取可预约日期分页数据
      */
     private IPage<Date> getListDate(int page, int limit, BookingRule bookingRule) {

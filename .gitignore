@@ -28,6 +28,7 @@ hs_err_pid*
 /.idea/
 /common/common-util/target/
 /common/service-util/target/
+/common/rabbit-util/target/
 /hospital-manage/target/
 /model/target/
 /service/service-cmn/target/

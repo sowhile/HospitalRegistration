@@ -33,6 +33,11 @@
             <artifactId>service-hosp-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.sowhile</groupId>
+            <artifactId>rabbit-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

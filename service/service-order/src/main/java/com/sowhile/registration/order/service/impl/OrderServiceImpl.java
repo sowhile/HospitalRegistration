@@ -2,6 +2,8 @@ package com.sowhile.registration.order.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sowhile.common.rabbit.constant.MqConst;
+import com.sowhile.common.rabbit.service.RabbitService;
 import com.sowhile.registration.common.exception.RegistrationException;
 import com.sowhile.registration.common.helper.HttpRequestHelper;
 import com.sowhile.registration.common.result.ResultCodeEnum;
@@ -14,10 +16,13 @@ import com.sowhile.registration.order.mapper.OrderMapper;
 import com.sowhile.registration.order.service.OrderService;
 import com.sowhile.registration.user.client.PatientFeignClient;
 import com.sowhile.registration.vo.hosp.ScheduleOrderVo;
+import com.sowhile.registration.vo.msm.MsmVo;
+import com.sowhile.registration.vo.order.OrderMqVo;
 import com.sowhile.registration.vo.order.SignInfoVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +37,11 @@ public class OrderServiceImpl extends
     @Autowired
     private HospitalFeignClient hospitalFeignClient;
 
+    @Autowired
+    private RabbitService rabbitService;
+
     //保存订单
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long saveOrder(String scheduleId, Long patientId) {
         Patient patient = patientFeignClient.getPatient(patientId);
@@ -119,6 +128,30 @@ public class OrderServiceImpl extends
             //排班剩余预约数
             Integer availableNumber = jsonObject.getInteger("availableNumber");
             //发送mq信息更新号源和短信通知
+
+            OrderMqVo orderMqVo = new OrderMqVo();
+            orderMqVo.setScheduleId(scheduleId);
+            orderMqVo.setReservedNumber(reservedNumber);
+            orderMqVo.setAvailableNumber(availableNumber);
+
+            //短信提示
+            MsmVo msmVo = new MsmVo();
+            msmVo.setPhone(orderInfo.getPatientPhone());
+            msmVo.setTemplateCode("SMS_194640721");
+            String reserveDate =
+                    new DateTime(orderInfo.getReserveDate()).toString("yyyy-MM-dd")
+                            + (orderInfo.getReserveTime() == 0 ? "上午" : "下午");
+            Map<String, Object> param = new HashMap<String, Object>() {{
+                put("title", orderInfo.getHosname() + "|" + orderInfo.getDepname() + "|" + orderInfo.getTitle());
+                put("amount", orderInfo.getAmount());
+                put("reserveDate", reserveDate);
+                put("name", orderInfo.getPatientName());
+                put("quitTime", new DateTime(orderInfo.getQuitTime()).toString("yyyy-MM-dd HH:mm"));
+            }};
+            msmVo.setParam(param);
+
+            orderMqVo.setMsmVo(msmVo);
+            rabbitService.sendMessage(MqConst.EXCHANGE_DIRECT_ORDER, MqConst.ROUTING_ORDER, orderMqVo);
         } else {
             throw new RegistrationException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
         }
