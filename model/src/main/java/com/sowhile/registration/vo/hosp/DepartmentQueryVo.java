@@ -22,6 +22,4 @@ public class DepartmentQueryVo {
 
     @ApiModelProperty(value = "大科室名称")
     private String bigname;
-
 }
-

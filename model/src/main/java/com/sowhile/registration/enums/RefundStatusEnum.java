@@ -27,5 +27,4 @@ public enum RefundStatusEnum {
     public void setName(String name) {
         this.name = name;
     }
-
 }

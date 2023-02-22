@@ -9,14 +9,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * <p>
- * 权限
- * </p>
- *
- * @author qy
- * @since 2019-11-08
- */
 @Data
 @ApiModel(description = "权限")
 @TableName("acl_permission")
@@ -67,6 +59,4 @@ public class Permission extends BaseEntity {
     @ApiModelProperty(value = "是否选中")
     @TableField(exist = false)
     private boolean isSelect;
-
 }
-

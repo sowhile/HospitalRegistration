@@ -20,4 +20,3 @@ public class DepartmentVo {
     private List<DepartmentVo> children;
 
 }
-

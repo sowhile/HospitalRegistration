@@ -9,13 +9,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-/**
- * <p>
- * RegisterRule
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "预约规则")
 @Document("BookingRule")
@@ -39,14 +32,9 @@ public class BookingRule {
     @ApiModelProperty(value = "预约规则")
     private List<String> rule;
 
-    /**
-     * @param rule
-     */
     public void setRule(String rule) {
         if (!StringUtils.isEmpty(rule)) {
             this.rule = JSONArray.parseArray(rule, String.class);
         }
     }
-
 }
-

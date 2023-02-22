@@ -7,13 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * Patient
- * </p>
- *
- * @author qy
- */
+
 @Data
 @ApiModel(description = "Patient")
 @TableName("patient")
@@ -85,6 +79,4 @@ public class Patient extends BaseEntity {
     @ApiModelProperty(value = "联系人手机")
     @TableField("contacts_phone")
     private String contactsPhone;
-
 }
-

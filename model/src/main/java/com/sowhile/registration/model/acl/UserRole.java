@@ -7,14 +7,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * 用户角色
- * </p>
- *
- * @author qy
- * @since 2019-11-08
- */
 @Data
 @ApiModel(description = "用户角色")
 @TableName("acl_user_role")
@@ -29,6 +21,4 @@ public class UserRole extends BaseEntity {
     @ApiModelProperty(value = "用户id")
     @TableField("user_id")
     private Long userId;
-
 }
-

@@ -3,13 +3,6 @@ package com.sowhile.registration.vo.cmn;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * Dict
- * </p>
- *
- * @author qy
- */
 @Data
 public class DictEeVo {
 
@@ -27,6 +20,4 @@ public class DictEeVo {
 
     @ExcelProperty(value = "编码", index = 4)
     private String dictCode;
-
 }
-

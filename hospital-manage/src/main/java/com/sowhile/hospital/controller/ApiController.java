@@ -1,9 +1,10 @@
 package com.sowhile.hospital.controller;
 
 import com.sowhile.hospital.mapper.HospitalSetMapper;
+import com.sowhile.hospital.mapper.ScheduleMapper;
 import com.sowhile.hospital.model.HospitalSet;
 import com.sowhile.hospital.service.ApiService;
-import com.sowhile.hospital.util.YyghException;
+import com.sowhile.hospital.util.RegistrationException;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
-/**
- * @author qy
- */
+
 @Api(tags = "医院管理接口")
 @Controller
 @RequestMapping
@@ -30,6 +30,9 @@ public class ApiController extends BaseController {
 
     @Autowired
     private HospitalSetMapper hospitalSetMapper;
+
+    @Autowired
+    private ScheduleMapper scheduleMapper;
 
     @RequestMapping("/hospitalSet/index")
     public String getHospitalSet(ModelMap model, RedirectAttributes redirectAttributes) {
@@ -54,7 +57,7 @@ public class ApiController extends BaseController {
             }
 
             model.addAttribute("hospital", apiService.getHospital());
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             this.failureMessage(e.getMessage(), request);
         } catch (Exception e) {
             this.failureMessage("数据异常", request);
@@ -70,8 +73,9 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/hospital/save", method = RequestMethod.POST)
     public String saveHospital(String data, HttpServletRequest request) {
         try {
+            //调用统一平台API删除mongoDB中的数据
             apiService.saveHospital(data);
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             return this.failurePage(e.getMessage(), request);
         } catch (Exception e) {
             return this.failurePage("数据异常", request);
@@ -92,7 +96,7 @@ public class ApiController extends BaseController {
             }
 
             model.addAllAttributes(apiService.findDepartment(pageNum, pageSize));
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             this.failureMessage(e.getMessage(), request);
         } catch (Exception e) {
             this.failureMessage("数据异常", request);
@@ -109,7 +113,7 @@ public class ApiController extends BaseController {
     public String save(String data, HttpServletRequest request) {
         try {
             apiService.saveDepartment(data);
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             return this.failurePage(e.getMessage(), request);
         } catch (Exception e) {
             return this.failurePage("数据异常", request);
@@ -130,7 +134,7 @@ public class ApiController extends BaseController {
             }
 
             model.addAllAttributes(apiService.findSchedule(pageNum, pageSize));
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             this.failureMessage(e.getMessage(), request);
         } catch (Exception e) {
             this.failureMessage("数据异常", request);
@@ -148,7 +152,7 @@ public class ApiController extends BaseController {
         try {
             //data = data.replaceAll("\r\n", "").replace(" ", "");
             apiService.saveSchedule(data);
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             return this.failurePage(e.getMessage(), request);
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,7 +170,7 @@ public class ApiController extends BaseController {
     public String saveBatchHospital(HttpServletRequest request) {
         try {
             apiService.saveBatchHospital();
-        } catch (YyghException e) {
+        } catch (RegistrationException e) {
             return this.failurePage(e.getMessage(), request);
         } catch (Exception e) {
             return this.failurePage("数据异常", request);
@@ -176,6 +180,7 @@ public class ApiController extends BaseController {
 
     @RequestMapping(value = "/department/remove/{depcode}", method = RequestMethod.GET)
     public String removeDepartment(ModelMap model, @PathVariable String depcode, RedirectAttributes redirectAttributes) {
+        //调用统一平台API删除mongoDB中的数据
         apiService.removeDepartment(depcode);
 
         this.successMessage(null, redirectAttributes);
@@ -184,11 +189,16 @@ public class ApiController extends BaseController {
 
     @RequestMapping(value = "/schedule/remove/{hosScheduleId}", method = RequestMethod.GET)
     public String removeSchedule(ModelMap model, @PathVariable String hosScheduleId, RedirectAttributes redirectAttributes) {
+        //删除yygh_manage中的数据
+        int id = Integer.parseInt(hosScheduleId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        scheduleMapper.deleteByMap(map);
+
+        //调用统一平台API删除mongoDB中的数据
         apiService.removeSchedule(hosScheduleId);
 
         this.successMessage(null, redirectAttributes);
         return "redirect:/schedule/list";
     }
-
 }
-

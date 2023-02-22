@@ -53,4 +53,3 @@ public class ScheduleOrderVo {
     @ApiModelProperty(value = "当天停止挂号时间")
     private Date stopTime;
 }
-

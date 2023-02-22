@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "service-hosp")
+@FeignClient(value = "service-hospital")
 @Repository
 public interface HospitalFeignClient {
     /**

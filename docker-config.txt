@@ -1,1 +1,2 @@
+#启mongoDB的docker命令
 docker run -d --name mongodb --restart always --privileged -p 27017:27017 -v /hospdata/mongodb:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=wd0531 mongo mongod --auth

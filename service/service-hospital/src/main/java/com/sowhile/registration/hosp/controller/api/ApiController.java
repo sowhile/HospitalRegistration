@@ -25,6 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * 供医院接口管理系统调用的 API
+ * 通过此API向 mongoDB 添加医院科室、排班等数据
+ */
 @Api
 @RestController
 @RequestMapping("/api/hosp")
@@ -53,6 +57,8 @@ public class ApiController {
         //2.查询数据库
         String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
+        //查询医院锁定状态
+        int status = hospitalSetService.getStatus(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
 
@@ -61,6 +67,9 @@ public class ApiController {
         }
         if (!sign.equals(encrypt)) {
             throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+        if (status == 0) {
+            throw new RegistrationException(ResultCodeEnum.HOSPITAL_LOCK);
         }
 
         //调用service的方法
@@ -102,6 +111,8 @@ public class ApiController {
         //2.查询数据库
         String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
+        //查询医院锁定状态
+        int status = hospitalSetService.getStatus(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
 
@@ -110,6 +121,9 @@ public class ApiController {
         }
         if (!sign.equals(encrypt)) {
             throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+        if (status == 0) {
+            throw new RegistrationException(ResultCodeEnum.HOSPITAL_LOCK);
         }
 
         String depcode = (String) paramMap.get("depcode");
@@ -129,6 +143,8 @@ public class ApiController {
         //2.查询数据库
         String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
+        //查询医院锁定状态
+        int status = hospitalSetService.getStatus(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
 
@@ -137,6 +153,9 @@ public class ApiController {
         }
         if (!sign.equals(encrypt)) {
             throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+        if (status == 0) {
+            throw new RegistrationException(ResultCodeEnum.HOSPITAL_LOCK);
         }
 
         //传输过程中'+'转换为了' ',所以要转换回来
@@ -179,6 +198,8 @@ public class ApiController {
         //2.查询数据库
         String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
+        //查询医院锁定状态
+        int status = hospitalSetService.getStatus(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
 
@@ -187,6 +208,10 @@ public class ApiController {
         }
         if (!sign.equals(encrypt)) {
             throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+
+        if (status == 0) {
+            throw new RegistrationException(ResultCodeEnum.HOSPITAL_LOCK);
         }
 
         scheduleService.save(paramMap);
@@ -237,6 +262,8 @@ public class ApiController {
         //2.查询数据库
         String hoscode = (String) paramMap.get("hoscode");
         String signKey = hospitalSetService.getSignKey(hoscode);
+        //查询医院锁定状态
+        int status = hospitalSetService.getStatus(hoscode);
         //3.把查出来的签名进行MD5加密
         String encrypt = MD5.encrypt(signKey);
 
@@ -245,6 +272,9 @@ public class ApiController {
         }
         if (!sign.equals(encrypt)) {
             throw new RegistrationException(ResultCodeEnum.SIGN_ERROR);
+        }
+        if (status == 0) {
+            throw new RegistrationException(ResultCodeEnum.HOSPITAL_LOCK);
         }
 
         String hosScheduleId = (String) paramMap.get("hosScheduleId");

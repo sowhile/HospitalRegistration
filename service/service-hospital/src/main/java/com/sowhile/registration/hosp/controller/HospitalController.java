@@ -49,5 +49,4 @@ public class HospitalController {
             @PathVariable String id) {
         return Result.ok(hospitalService.show(id));
     }
-
 }

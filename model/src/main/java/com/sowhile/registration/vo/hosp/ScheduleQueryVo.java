@@ -24,6 +24,4 @@ public class ScheduleQueryVo {
 
     @ApiModelProperty(value = "安排时间（0：上午 1：下午）")
     private Integer workTime;
-
 }
-

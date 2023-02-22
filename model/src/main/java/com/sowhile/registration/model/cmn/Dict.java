@@ -12,13 +12,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * <p>
- * Dict
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "数据字典")
 @TableName("dict")
@@ -67,5 +60,4 @@ public class Dict {
     //数据库中没有这个字段
     @TableField(exist = false)
     private boolean hasChildren;
-
 }

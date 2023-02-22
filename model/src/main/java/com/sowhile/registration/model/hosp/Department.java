@@ -7,13 +7,6 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * <p>
- * Department
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "Department")
 @Document("Department")
@@ -40,6 +33,4 @@ public class Department extends BaseMongoEntity {
 
     @ApiModelProperty(value = "大科室名称")
     private String bigname;
-
 }
-

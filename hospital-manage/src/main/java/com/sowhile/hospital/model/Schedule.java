@@ -1,18 +1,13 @@
 package com.sowhile.hospital.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * Schedule
- * </p>
- *
- * @author qy
- */
+
 @Data
 @ApiModel(description = "Schedule")
 @TableName("schedule")
@@ -63,5 +58,9 @@ public class Schedule extends BaseNoAutoEntity {
     @ApiModelProperty(value = "排班状态（-1：停诊 0：停约 1：可约）")
     @TableField("status")
     private Integer status;
-}
 
+    @ApiModelProperty(value = "是否删除(0:未删除  1:已删除)")
+    @TableField("is_deleted")
+    @TableLogic
+    private Integer isDeleted;
+}

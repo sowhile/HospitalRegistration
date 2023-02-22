@@ -9,13 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * OrderInfo
- * </p>
- *
- * @author qy
- */
+
 @Data
 @ApiModel(description = "OrderInfo")
 @TableName("order_info")
@@ -58,6 +52,4 @@ public class OrderInfo extends BaseEntity {
     @ApiModelProperty(value = "订单状态")
     @TableField("order_status")
     private Integer orderStatus;
-
 }
-

@@ -27,6 +27,4 @@ public class HospitalSet extends BaseEntity {
 
     @ApiModelProperty(value = "api基础路径")
     private String apiUrl;
-
 }
-

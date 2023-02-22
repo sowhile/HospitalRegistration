@@ -8,13 +8,6 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * <p>
- * Hospital
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "Hospital")
 @Document("Hospital")
@@ -64,6 +57,4 @@ public class Hospital extends BaseMongoEntity {
     public void setBookingRule(String bookingRule) {
         this.bookingRule = JSONObject.parseObject(bookingRule, BookingRule.class);
     }
-
 }
-

@@ -63,6 +63,4 @@ public class IndexController {
 
         return PAGE_LOGIN;
     }
-
 }
-

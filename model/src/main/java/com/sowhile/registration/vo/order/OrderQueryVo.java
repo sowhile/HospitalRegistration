@@ -33,6 +33,4 @@ public class OrderQueryVo {
     @ApiModelProperty(value = "创建时间")
     private String createTimeBegin;
     private String createTimeEnd;
-
 }
-

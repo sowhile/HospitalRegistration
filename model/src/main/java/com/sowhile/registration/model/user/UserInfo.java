@@ -7,10 +7,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * <p>
- * UserInfo
- */
 @Data
 @ApiModel(description = "UserInfo")
 @TableName("user_info")
@@ -53,6 +49,4 @@ public class UserInfo extends BaseEntity {
     @ApiModelProperty(value = "状态（0：锁定 1：正常）")
     @TableField("status")
     private Integer status;
-
 }
-

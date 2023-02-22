@@ -1,16 +1,11 @@
 package com.sowhile.hospital.config;
 
-import com.sowhile.hospital.util.YyghException;
+import com.sowhile.hospital.util.RegistrationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-/**
- * 全局异常处理类
- *
- * @author qy
- */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -27,8 +22,8 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(YyghException.class)
-    public String error(YyghException e, Model model) {
+    @ExceptionHandler(RegistrationException.class)
+    public String error(RegistrationException e, Model model) {
         model.addAttribute("message", e.getMessage());
         return "error";
     }

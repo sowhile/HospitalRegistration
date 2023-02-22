@@ -10,13 +10,6 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * RefundInfo
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "RefundInfo")
 @TableName("refund_info")
@@ -59,6 +52,4 @@ public class RefundInfo extends BaseEntity {
     @ApiModelProperty(value = "回调信息")
     @TableField("callback_content")
     private String callbackContent;
-
 }
-

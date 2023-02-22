@@ -7,13 +7,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * <p>
- * RegisterRule
- * </p>
- *
- * @author qy
- */
+
 @Data
 @ApiModel(description = "可预约排班规则数据")
 public class BookingScheduleRuleVo {
@@ -41,4 +35,3 @@ public class BookingScheduleRuleVo {
     @ApiModelProperty(value = "状态 0：正常 1：即将放号 -1：当天已停止挂号")
     private Integer status;
 }
-

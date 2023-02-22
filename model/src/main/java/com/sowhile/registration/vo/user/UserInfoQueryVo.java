@@ -22,5 +22,4 @@ public class UserInfoQueryVo {
 
     @ApiModelProperty(value = "创建时间")
     private String createTimeEnd;
-
 }

@@ -6,13 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * HospitalSet
- * </p>
- *
- * @author qy
- */
 @Data
 @ApiModel(description = "签名信息")
 public class SignInfoVo implements Serializable {
@@ -22,8 +15,6 @@ public class SignInfoVo implements Serializable {
     @ApiModelProperty(value = "api基础路径")
     private String apiUrl;
 
-    @ApiModelProperty(value = "签名秘钥")
+    @ApiModelProperty(value = "签名密钥")
     private String signKey;
-
 }
-
