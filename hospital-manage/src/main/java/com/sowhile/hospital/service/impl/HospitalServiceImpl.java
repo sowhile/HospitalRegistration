@@ -142,6 +142,4 @@ public class HospitalServiceImpl implements HospitalService {
         // 业务：略
         return 1L;
     }
-
-
 }
