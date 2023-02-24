@@ -372,9 +372,10 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         scheduleRepository.save(schedule);
     }
 
+
     @Override
     public Schedule getScheduleId(String scheduleId) {
-        Schedule schedule = baseMapper.selectById(scheduleId);
+        Schedule schedule = scheduleRepository.findById(scheduleId).get();
         return schedule;
     }
 

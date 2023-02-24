@@ -106,8 +106,8 @@
         <div class="operate-view" style="height: 350px;">
           <div class="wrapper wechat">
             <div>
-              <img alt="" src="images/weixin.jpg">
-
+              <!--              <img alt="" src="images/weixin.jpg">-->
+              <qriously :size="220" :value="payObj.codeUrl"/>
               <div style="text-align: center;line-height: 25px;margin-bottom: 40px;">
                 请使用微信扫一扫<br/>
                 扫描二维码支付
@@ -124,6 +124,7 @@
 import '~/assets/css/hospital_personal.css'
 import '~/assets/css/hospital.css'
 import orderInfoApi from '@/api/orderInfo'
+import weixinApi from '@/api/weixin'
 
 export default {
   data() {
@@ -147,6 +148,38 @@ export default {
         console.log(response.data);
         this.orderInfo = response.data
       })
+    },
+    pay() {
+      //支付二维码弹框显示
+      this.dialogPayVisible = true
+      weixinApi.createNative(this.orderId).then(response => {
+        this.payObj = response.data
+        if (this.payObj.codeUrl == '') {
+          //生成失败
+          this.dialogPayVisible = false
+          this.$message.error("支付错误")
+        } else {
+          this.timer = setInterval(() => {
+            //每隔3秒查询支付状态
+            this.queryPayStatus(this.orderId)
+          }, 3000);
+        }
+      })
+    },
+    queryPayStatus(orderId) {
+      weixinApi.queryPayStatus(orderId).then(response => {
+        if (response.message == '支付中') {
+          return
+        }
+        //清除定时器
+        clearInterval(this.timer);
+        window.location.reload()
+      })
+    },
+    closeDialog() {
+      if (this.timer) {
+        clearInterval(this.timer);
+      }
     }
   }
 }
