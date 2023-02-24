@@ -24,6 +24,7 @@ public class OrderApiController {
     @Autowired
     private OrderService orderService;
 
+    //生成挂号订单
     @ApiOperation(value = "创建订单")
     @PostMapping("auth/submitOrder/{scheduleId}/{patientId}")
     public Result submitOrder(
@@ -32,6 +33,14 @@ public class OrderApiController {
             @ApiParam(name = "patientId", value = "就诊人id", required = true)
             @PathVariable Long patientId) {
         return Result.ok(orderService.saveOrder(scheduleId, patientId));
+    }
+
+    //根据订单id查询订单详情
+    @ApiOperation(value = "根据订单id查询订单详情")
+    @GetMapping("auth/getOrder/{orderId}")
+    public Result getOrder(@PathVariable String orderId) {
+        OrderInfo orderInfo = orderService.getOrder(orderId);
+        return Result.ok(orderInfo);
     }
 
     //订单列表（条件查询带分页）

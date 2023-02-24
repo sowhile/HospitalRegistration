@@ -21,11 +21,12 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
     //获取就诊人列表
     @Override
     public List<Patient> findAllUserId(Long userId) {
-        //根据userid查询所有就诊人信息列表
+        //根据userId查询所有就诊人信息列表
         QueryWrapper<Patient> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId);
         List<Patient> patientList = baseMapper.selectList(wrapper);
         //通过远程调用，得到编码对应具体内容，查询数据字典表内容
+        //TODO
         patientList.stream().forEach(item -> {
             //其他参数封装
             this.packPatient(item);

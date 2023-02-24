@@ -65,8 +65,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="医院"
               prop="hosname"
+              label="医院"
               width="100">
             </el-table-column>
             <el-table-column
@@ -99,11 +99,11 @@
         </div>
         <!-- 分页 -->
         <el-pagination
+          class="pagination"
+          layout="prev, pager, next"
           :current-page="page"
           :page-size="limit"
           :total="total"
-          class="pagination"
-          layout="prev, pager, next"
           @current-change="fetchData">
         </el-pagination>
       </div>

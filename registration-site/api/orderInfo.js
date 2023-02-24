@@ -9,6 +9,13 @@ export default {
       method: 'post'
     })
   },
+  //订单详细信息
+  getOrder(orderId) {
+    return request({
+      url: `${api_name}/auth/getOrder/${orderId}`,
+      method: 'get'
+    })
+  },
   //订单列表
   getPageList(page, limit, searchObj) {
     return request({

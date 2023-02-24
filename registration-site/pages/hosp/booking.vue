@@ -112,7 +112,7 @@
                 <el-form-item label="医生专长：">
                   <div class="content"><span>{{ schedule.skill }}</span></div>
                 </el-form-item>
-                <el-form-item label="医事服务费：">
+                <el-form-item label="医师服务费：">
                   <div class="content">
                     <div class="fee">{{ schedule.amount }}元</div>
                   </div>

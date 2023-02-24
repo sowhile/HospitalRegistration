@@ -314,7 +314,8 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     public ScheduleOrderVo getScheduleOrderVo(String scheduleId) {
         ScheduleOrderVo scheduleOrderVo = new ScheduleOrderVo();
         //排班信息
-        Schedule schedule = baseMapper.selectById(scheduleId);
+//        Schedule schedule = baseMapper.selectById(scheduleId);
+        Schedule schedule = scheduleRepository.findById(scheduleId).get();
         if (null == schedule) {
             throw new RegistrationException(ResultCodeEnum.PARAM_ERROR);
         }

@@ -14,4 +14,6 @@ public interface OrderService extends IService<OrderInfo> {
      * 分页列表
      */
     IPage<OrderInfo> selectPage(Page<OrderInfo> pageParam, OrderQueryVo orderQueryVo);
+
+    OrderInfo getOrder(String orderId);
 }
