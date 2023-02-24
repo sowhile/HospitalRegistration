@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sowhile.registration.common.exception.RegistrationException;
 import com.sowhile.registration.common.result.ResultCodeEnum;
 import com.sowhile.registration.hosp.mapper.ScheduleMapper;
+import com.sowhile.registration.hosp.repository.DepartmentRepository;
+import com.sowhile.registration.hosp.repository.HospitalRepository;
 import com.sowhile.registration.hosp.repository.ScheduleRepository;
 import com.sowhile.registration.hosp.service.DepartmentService;
 import com.sowhile.registration.hosp.service.HospitalService;
@@ -38,6 +40,12 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
         implements ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private HospitalRepository hospitalRepository;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -286,7 +294,18 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule>
     @Override
     public Schedule getById(String id) {
         Schedule schedule = scheduleRepository.findById(id).get();
-//        return this.packSchedule(schedule);
+        return this.packSchedule(schedule);
+    }
+
+    //将就诊医院和就诊科室信息
+    private Schedule packSchedule(Schedule schedule) {
+        HashMap<String, Object> param = new HashMap<>();
+
+        param.put("hosname",
+                hospitalRepository.getHospitalByHoscode(schedule.getHoscode()).getHosname());
+        param.put("depname",
+                departmentRepository.getDepartmentByHoscodeAndDepcode(schedule.getHoscode(), schedule.getDepcode()).getDepname());
+        schedule.setParam(param);
         return schedule;
     }
 
