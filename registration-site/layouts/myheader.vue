@@ -4,7 +4,7 @@
       <!-- logo -->
       <div class="left-wrapper v-link selected">
         <img height="50" src="~assets/images/logo.png" style="width: 50px" width="50">
-        <span class="text">尚医通 预约挂号统一平台</span>
+        <span class="text">医通达 预约挂号统一平台</span>
       </div>
       <!-- 搜索框 -->
       <!--      <div class="search-wrapper">-->
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="slogan">
-              <div>xxxxxx官方指定平台</div>
+              <div>医通达官方指定平台</div>
               <div>快速挂号 安全放心</div>
             </div>
           </div>

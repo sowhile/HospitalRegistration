@@ -48,7 +48,7 @@ public class PaymentServiceImpl extends
             paymentInfo.setCreateTime(new Date());
             paymentInfo.setOrderId(order.getId());
             paymentInfo.setPaymentType(paymentType);
-            paymentInfo.setTradeNo(order.getOutTradeNo());
+            paymentInfo.setOutTradeNo(order.getOutTradeNo());
             paymentInfo.setPaymentStatus(PaymentStatusEnum.UNPAID.getStatus());
             String subject = new DateTime(order.getReserveDate()).toString("yyyy-MM-dd") + "|" + order.getHosname() + order.getDepname() + order.getPatientName();
             paymentInfo.setSubject(subject);

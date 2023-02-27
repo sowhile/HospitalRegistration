@@ -1,7 +1,7 @@
 <template>
   <div class="footer-container">
     <div class="wrapper">
-      <div><span class="record">陕ICP备61092929号</span>
+      <div><span class="record"><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2022006702号-2</a></span>
         <span class="phone">电话挂号029-1234567</span></div>
       <div class="right">
         <span class="v-link clickable"> 联系我们 </span>
