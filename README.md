@@ -1,2 +1,2 @@
 # HospitalRegistration
-![](.\img\data.png)
+![](.\img\data.jpg)
