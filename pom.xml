@@ -129,4 +129,49 @@
         </dependencies>
     </dependencyManagement>
 
+<!--    &lt;!&ndash;docker部署&ndash;&gt;-->
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash;docker-maven-plugin插件打包&ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>1.0.0</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash;镜像名称&ndash;&gt;-->
+<!--                    <imageName>${project.artifactId}</imageName>-->
+<!--                    &lt;!&ndash;指定标签&ndash;&gt;-->
+<!--                    <imageTags>-->
+<!--                        <imageTag>latest</imageTag>-->
+<!--                    </imageTags>-->
+<!--                    &lt;!&ndash;基础镜像jdk1.8&ndash;&gt;-->
+<!--                    <baseImage>java</baseImage>-->
+<!--                    &lt;!&ndash;制作者提供本人信息&ndash;&gt;-->
+<!--                    <maintainer>wdworkbox@aliyun.com</maintainer>-->
+<!--                    &lt;!&ndash;切换到Root目录&ndash;&gt;-->
+<!--                    <workdir>/ROOT</workdir>-->
+<!--                    <cmd>["java", "-version"]</cmd>-->
+<!--                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>-->
+
+<!--                    &lt;!&ndash;指定DockerFile路径&ndash;&gt;-->
+<!--                    &lt;!&ndash;<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;指定远程docker api地址&ndash;&gt;-->
+<!--                    <dockerHost>http://47.115.228.83:2375</dockerHost>-->
+
+<!--                    &lt;!&ndash; 这里是复制 jar 包到 docker 容器指定目录配置 &ndash;&gt;-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/ROOT</targetPath>-->
+<!--                            &lt;!&ndash;用于指定需要复制的根目录&ndash;&gt;-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            &lt;!&ndash;用于指定需要复制的jar文件&ndash;&gt;-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
 </project>

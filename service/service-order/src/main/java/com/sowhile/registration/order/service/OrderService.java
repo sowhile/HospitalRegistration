@@ -17,4 +17,9 @@ public interface OrderService extends IService<OrderInfo> {
     IPage<OrderInfo> selectPage(Page<OrderInfo> pageParam, OrderQueryVo orderQueryVo);
 
     OrderInfo getOrder(String orderId);
+
+    /**
+     * 取消订单
+     */
+    Boolean cancelOrder(Long orderId);
 }

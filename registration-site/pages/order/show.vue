@@ -121,94 +121,109 @@
   <!-- footer -->
 </template>
 <script>
-import '~/assets/css/hospital_personal.css'
-import '~/assets/css/hospital.css'
-import orderInfoApi from '@/api/orderInfo'
-import weixinApi from '@/api/weixin'
+  import '~/assets/css/hospital_personal.css'
+  import '~/assets/css/hospital.css'
+  import orderInfoApi from '@/api/orderInfo'
+  import weixinApi from '@/api/weixin'
 
-export default {
-  data() {
-    return {
-      orderId: null,
-      orderInfo: {
-        param: {}
-      },
-      dialogPayVisible: false,
-      payObj: {},
-      timer: null  // 定时器名称
-    }
-  },
-  created() {
-    this.orderId = this.$route.query.orderId
-    this.init()
-  },
-  methods: {
-    init() {
-      orderInfoApi.getOrder(this.orderId).then(response => {
-        console.log(response.data);
-        this.orderInfo = response.data
-      })
-    },
-    pay() {
-      //支付二维码弹框显示
-      this.dialogPayVisible = true
-      weixinApi.createNative(this.orderId).then(response => {
-        this.payObj = response.data
-        if (this.payObj.codeUrl == '') {
-          //生成失败
-          this.dialogPayVisible = false
-          this.$message.error("支付错误")
-        } else {
-          this.timer = setInterval(() => {
-            //每隔3秒查询支付状态
-            this.queryPayStatus(this.orderId)
-          }, 3000);
-        }
-      })
-    },
-    queryPayStatus(orderId) {
-      weixinApi.queryPayStatus(orderId).then(response => {
-        if (response.message == '支付中') {
-          return
-        }
-        //清除定时器
-        clearInterval(this.timer);
-        window.location.reload()
-      })
-    },
-    closeDialog() {
-      if (this.timer) {
-        clearInterval(this.timer);
+  export default {
+    data() {
+      return {
+        orderId: null,
+        orderInfo: {
+          param: {}
+        },
+        dialogPayVisible: false,
+        payObj: {},
+        timer: null  // 定时器名称
       }
+    },
+    created() {
+      this.orderId = this.$route.query.orderId
+      this.init()
+    },
+    methods: {
+      init() {
+        orderInfoApi.getOrder(this.orderId).then(response => {
+          console.log(response.data);
+          this.orderInfo = response.data
+        })
+      },
+      pay() {
+        //支付二维码弹框显示
+        this.dialogPayVisible = true
+        weixinApi.createNative(this.orderId).then(response => {
+          this.payObj = response.data
+          if (this.payObj.codeUrl == '') {
+            //生成失败
+            this.dialogPayVisible = false
+            this.$message.error("支付错误")
+          } else {
+            this.timer = setInterval(() => {
+              //每隔3秒查询支付状态
+              this.queryPayStatus(this.orderId)
+            }, 3000);
+          }
+        })
+      },
+      queryPayStatus(orderId) {
+        weixinApi.queryPayStatus(orderId).then(response => {
+          if (response.message == '支付中') {
+            return
+          }
+          //清除定时器
+          clearInterval(this.timer);
+          window.location.reload()
+        })
+      },
+      closeDialog() {
+        if (this.timer) {
+          clearInterval(this.timer);
+        }
+      },
+      cancelOrder() {
+        this.$confirm('确定取消预约吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => { // promise
+          // 点击确定，远程调用
+          return weixinApi.cancelOrder(this.orderId)
+        }).then((response) => {
+          this.$message.success('取消成功')
+          this.init()
+        }).catch(() => {
+          // this.$message.info('已取消')
+        })
+      },
     }
   }
-}
 </script>
 <style>
-.info-wrapper {
-  padding-left: 0;
-  padding-top: 0;
-}
+  .info-wrapper {
+    padding-left: 0;
+    padding-top: 0;
+  }
 
-.content-wrapper {
-  color: #333;
-  font-size: 14px;
-  padding-bottom: 0;
-}
+  .content-wrapper {
+    color: #333;
+    font-size: 14px;
+    padding-bottom: 0;
+  }
 
-.bottom-wrapper {
-  width: 100%;
-}
+  .bottom-wrapper {
+    width: 100%;
+  }
 
-.button-wrapper {
-  margin: 0;
-}
+  .button-wrapper {
+    margin: 0;
+  }
 
-.el-form-item {
-  margin-bottom: 5px;
-}
+  .el-form-item {
+    margin-bottom: 5px;
+  }
 
-.bottom-wrapper .button-wrapper {
-  margin-top: 0;
-}
+  .bottom-wrapper .button-wrapper {
+    margin-top: 0;
+  }
 </style>

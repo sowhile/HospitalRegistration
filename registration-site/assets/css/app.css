@@ -2313,8 +2313,9 @@ input::-ms-input-placeholder {
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background: #00c25f;
-  color: #fff;
+  /*background: #00c25f;*/
+  background: #ffffff;
+  color: #ffffff;
   margin-top: 50px;
   cursor: pointer;
   -webkit-user-select: none;
@@ -2324,7 +2325,7 @@ input::-ms-input-placeholder {
 }
 
 .operate-view .wrapper .bottom .wechat-wrapper:hover {
-  background: #00b157
+  background: #ffffff;
 }
 
 .operate-view .wrapper .bottom .wechat-wrapper .icon {
@@ -2348,7 +2349,7 @@ input::-ms-input-placeholder {
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background: #4490f1;
+  background: #ffffff;
   color: #fff;
   margin-top: 50px;
   cursor: pointer;
@@ -2360,7 +2361,7 @@ input::-ms-input-placeholder {
 }
 
 .operate-view .wrapper .bottom .phone-wrapper:hover {
-  background: #2d81f7
+  background: #ffffff;
 }
 
 .operate-view .wrapper .bottom .phone-wrapper .icon {

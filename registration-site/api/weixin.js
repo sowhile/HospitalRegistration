@@ -3,6 +3,7 @@ import request from '@/utils/request'
 const api_name = `/api/ucenter/wx`
 
 export default {
+  //登录
   getLoginParam() {
     return request({
       url: `${api_name}/getLoginParam`,
@@ -20,6 +21,13 @@ export default {
   queryPayStatus(orderId) {
     return request({
       url: `/api/order/weixin/queryPayStatus/${orderId}`,
+      method: 'get'
+    })
+  },
+  //取消订单
+  cancelOrder(orderId) {
+    return request({
+      url: `/api/order/orderInfo/auth/cancelOrder/${orderId}`,
       method: 'get'
     })
   },

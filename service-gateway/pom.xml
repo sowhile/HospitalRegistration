@@ -36,4 +36,31 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <!-- 打包之后jar包的名字 -->
+        <finalName>service-gateway</finalName>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <!-- 启动类的全类名 -->
+                <configuration>
+                    <mainClass>com.sowhile.registration.gatwway.ServerGatewayApplication</mainClass>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
 </project>

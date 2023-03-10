@@ -58,9 +58,10 @@ public class WeixinApiController {
     @RequestMapping("callback")
     public String callback(String code, String state) {
         //获取授权临时票据
-        System.out.println("微信授权服务器回调。。。。。。");
+        System.out.println("**********************微信授权服务器回调***********************");
         System.out.println("state = " + state);
         System.out.println("code = " + code);
+        System.out.println("**********************微信授权服务器回调***********************");
 
         if (StringUtils.isEmpty(state) || StringUtils.isEmpty(code)) {
 //            log.error("非法回调请求");
