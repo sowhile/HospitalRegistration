@@ -154,6 +154,9 @@ public class WeixinApiController {
         String token = JwtHelper.createToken(userInfo.getId(), name);
         map.put("token", token);
         //跳转到前端页面中
-        return "redirect:" + ConstantPropertiesUtil.REGISTRATION_BASE_URL + "/weixin/callback?token=" + map.get("token") + "&openid=" + map.get("openid") + "&name=" + URLEncoder.encode((String) map.get("name"));
+        String redirect = "redirect:" + ConstantPropertiesUtil.REGISTRATION_BASE_URL +
+                "/weixin/callback?token=" + map.get("token") + "&openid=" +
+                map.get("openid") + "&name=" + URLEncoder.encode((String) map.get("name"));
+        return redirect;
     }
 }

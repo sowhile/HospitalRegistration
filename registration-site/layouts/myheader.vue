@@ -3,8 +3,10 @@
     <div class="wrapper">
       <!-- logo -->
       <div class="left-wrapper v-link selected">
-        <img height="50" src="~assets/images/logo.png" style="width: 50px" width="50">
-        <span class="text">医通达 预约挂号统一平台</span>
+        <a href="http://localhost:3000"><img height="50" src="~assets/images/logo.png" style="width: 50px"
+                                             width="50"></a>
+        <a style=" text-decoration: none; color: #4990f1; letter-spacing:4px" href="http://localhost:3000"><span
+          class="text">医通达预约挂号统一平台</span></a>
       </div>
       <!-- 搜索框 -->
       <!--      <div class="search-wrapper">-->
@@ -166,7 +168,7 @@
     methods: {
       loginCallback(name, token, openid) {
         // 打开手机登录层，绑定手机号，该逻辑与手机登录一致
-        if (openid != '') {
+        if (openid != null) {
           this.userInfo.openid = openid
           this.showLogin()
         } else {

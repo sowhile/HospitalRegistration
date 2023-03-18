@@ -109,115 +109,115 @@
 </template>
 
 <script>
-import '~/assets/css/hospital_personal.css'
-import '~/assets/css/hospital.css'
-import '~/assets/css/personal.css'
-import dictApi from '@/api/dict'
-import userInfoApi from '@/api/userInfo'
+  import '~/assets/css/hospital_personal.css'
+  import '~/assets/css/hospital.css'
+  import '~/assets/css/personal.css'
+  import dictApi from '@/api/dict'
+  import userInfoApi from '@/api/userInfo'
 
-const defaultForm = {
-  name: '',
-  certificatesType: '',
-  certificatesNo: '',
-  certificatesUrl: ''
-}
-export default {
-  data() {
-    return {
-      userAuth: defaultForm,
-      certificatesTypeList: [],
-      fileUrl: 'http://localhost/api/oss/file/fileUpload?fileHost=userAuth',
-      userInfo: {
-        param: {}
+  const defaultForm = {
+    name: '',
+    certificatesType: '',
+    certificatesNo: '',
+    certificatesUrl: ''
+  }
+  export default {
+    data() {
+      return {
+        userAuth: defaultForm,
+        certificatesTypeList: [],
+        fileUrl: `http://localhost/api/oss/file/fileUpload`,
+        userInfo: {
+          param: {}
+        },
+        submitBnt: '提交'
+      }
+    },
+    created() {
+      this.init()
+    },
+    methods: {
+      init() {
+        this.getUserInfo()
+        this.getDict()
       },
-      submitBnt: '提交'
-    }
-  },
-  created() {
-    this.init()
-  },
-  methods: {
-    init() {
-      this.getUserInfo()
-      this.getDict()
-    },
-    getUserInfo() {
-      userInfoApi.getUserInfo()
-        .then(response => {
-          this.userInfo = response.data
+      getUserInfo() {
+        userInfoApi.getUserInfo()
+          .then(response => {
+            this.userInfo = response.data
+          })
+      },
+      saveUserAuth() {
+        if (this.submitBnt == '正在提交...') {
+          this.$message.info('重复提交')
+          return
+        }
+        this.submitBnt = '正在提交...'
+        userInfoApi.saveUserAuth(this.userAuth)
+          .then(response => {
+            this.$message.success("提交成功")
+            window.location.reload()
+          }).catch(e => {
+          this.submitBnt = '提交'
         })
-    },
-    saveUserAuth() {
-      if (this.submitBnt == '正在提交...') {
-        this.$message.info('重复提交')
-        return
+      },
+      getDict() {
+        dictApi.findByDictCode("CertificatesType")
+          .then(response => {
+            this.certificatesTypeList = response.data
+          })
+      },
+      onUploadSuccess(response, file) {
+        if (response.code !== 200) {
+          this.$message.error("上传失败")
+          return
+        }
+        // 填充上传文件列表
+        this.userAuth.certificatesUrl = file.response.data
       }
-      this.submitBnt = '正在提交...'
-      userInfoApi.saveUserAuth(this.userAuth)
-        .then(response => {
-          this.$message.success("提交成功")
-          window.location.reload()
-        }).catch(e => {
-        this.submitBnt = '提交'
-      })
-    },
-    getDict() {
-      dictApi.findByDictCode("CertificatesType")
-        .then(response => {
-          this.certificatesTypeList = response.data
-        })
-    },
-    onUploadSuccess(response, file) {
-      if (response.code !== 200) {
-        this.$message.error("上传失败")
-        return
-      }
-      // 填充上传文件列表
-      this.userAuth.certificatesUrl = file.response
     }
   }
-}
 </script>
 <style>
-.header-wrapper .title {
-  font-size: 16px;
-  margin-top: 0;
-}
+  .header-wrapper .title {
+    font-size: 16px;
+    margin-top: 0;
+  }
 
-.content-wrapper {
-  margin-left: 0;
-}
+  .content-wrapper {
+    margin-left: 0;
+  }
 
-.patient-card .el-card__header .detail {
-  font-size: 14px;
-}
+  .patient-card .el-card__header .detail {
+    font-size: 14px;
+  }
 
-.page-container .title {
-  letter-spacing: 1px;
-  font-weight: 700;
-  color: #333;
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
+  .page-container .title {
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #333;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
 
-.page-container .tips {
-  width: 100%;
-  padding-left: 0;
-}
+  .page-container .tips {
+    width: 100%;
+    padding-left: 0;
+  }
 
-.page-container .form-wrapper {
-  padding-left: 92px;
-  width: 580px;
-}
+  .page-container .form-wrapper {
+    padding-left: 92px;
+    width: 580px;
+  }
 
-.form-normal {
-  height: 40px;
-}
+  .form-normal {
+    height: 40px;
+  }
 
-.bottom-wrapper {
-  width: 100%;
-  padding: 0;
-  margin-top: 0;
-}
+  .bottom-wrapper {
+    width: 100%;
+    padding: 0;
+    margin-top: 0;
+  }
 </style>
